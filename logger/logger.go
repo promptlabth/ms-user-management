@@ -13,7 +13,9 @@ import (
 var logger *zap.Logger
 
 func InitLogger() {
-	logger = zap.Must(zapdriver.NewProductionConfig().Build(zap.AddStacktrace(zapcore.DPanicLevel)))
+	callerSkip1 := zap.AddCallerSkip(1)
+
+	logger = zap.Must(zapdriver.NewProductionConfig().Build(callerSkip1, zap.AddStacktrace(zapcore.DPanicLevel)))
 }
 
 func Info(ctx context.Context, msg string, zapField ...zap.Field) {

@@ -11,8 +11,8 @@ type UserDetailInquirey struct {
 	StripeId    *string `gorm:"column:stripe_id"`
 
 	PlanId      int64   `gorm:"column:plan_id"`
-	PlanType    string  `gorm:"column:planType"`
-	MaxMessages int64   `gorm:"column:maxMessages"`
+	PlanType    string  `gorm:"column:plan_type"`
+	MaxMessages int64   `gorm:"column:max_messages"`
 	ProductId   *string `gorm:"column:product_id"`
 
 	BalanceMessage int64 `gorm:"column:balance_message"`

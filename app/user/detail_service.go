@@ -1,13 +1,17 @@
 package user
 
-import context "context"
+import (
+	context "context"
+
+	"github.com/promptlabth/ms-user-management/logger"
+)
 
 func (s *UserSerivce) GetUserById(ctx context.Context, firebase_id string) (*GetUserByIdRes, error) {
 	res, err := s.userRepository.GetDetailUserById(ctx, firebase_id)
 	if err != nil {
 		return nil, err
 	}
-
+	logger.Info(ctx, res.PlanType)
 	return &GetUserByIdRes{
 		Id:          res.ID,
 		FirebaseId:  res.FirebaseId,
