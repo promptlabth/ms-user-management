@@ -25,4 +25,24 @@ func (r *UserRegis) GetDetailUser(ctx context.Context, req *GetUserByIdReq) (*Ge
 	return res, nil
 }
 
+func (r *UserRegis) CreateUser(ctx context.Context, req *CreateUserReq) (*CreateUserRes, error) {
+	msg := CreateUserReqDomain{
+		FirebaseId:  req.FirebaseId,
+		Name:        req.Name,
+		Email:       req.Email,
+		ProfilePic:  req.ProfilePic,
+		Platform:    req.Platform,
+		AccessToken: req.AccessToken,
+		StripeId:    req.StripeId,
+	}
+	err := r.userService.CreateUser(ctx, msg)
+	if err != nil {
+		return nil, err
+	}
+	return &CreateUserRes{
+		Status:  "200",
+		Message: "success to save",
+	}, nil
+}
+
 func (r *UserRegis) mustEmbedUnimplementedUserServiceServer() {}

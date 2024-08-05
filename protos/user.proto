@@ -30,4 +30,21 @@ message PlanDetail {
 
 service UserService {
     rpc GetDetailUser(GetUserByIdReq) returns(GetUserByIdRes);
+    rpc CreateUser(CreateUserReq) returns(CreateUserRes);
+}
+
+
+message CreateUserReq {
+    string firebase_id = 1;
+    string name = 2; 
+    optional string email = 3;
+    optional string profile_pic =4;
+    optional string platform = 5;
+    optional string access_token = 6;
+    optional string stripe_id = 8;
+}
+
+message CreateUserRes{
+    string message = 1;
+    string status = 2;
 }

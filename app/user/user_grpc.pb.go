@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion8
 
 const (
 	UserService_GetDetailUser_FullMethodName = "/user.UserService/GetDetailUser"
+	UserService_CreateUser_FullMethodName    = "/user.UserService/CreateUser"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
 	GetDetailUser(ctx context.Context, in *GetUserByIdReq, opts ...grpc.CallOption) (*GetUserByIdRes, error)
+	CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserRes, error)
 }
 
 type userServiceClient struct {
@@ -47,11 +49,22 @@ func (c *userServiceClient) GetDetailUser(ctx context.Context, in *GetUserByIdRe
 	return out, nil
 }
 
+func (c *userServiceClient) CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateUserRes)
+	err := c.cc.Invoke(ctx, UserService_CreateUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
 type UserServiceServer interface {
 	GetDetailUser(context.Context, *GetUserByIdReq) (*GetUserByIdRes, error)
+	CreateUser(context.Context, *CreateUserReq) (*CreateUserRes, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -61,6 +74,9 @@ type UnimplementedUserServiceServer struct {
 
 func (UnimplementedUserServiceServer) GetDetailUser(context.Context, *GetUserByIdReq) (*GetUserByIdRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDetailUser not implemented")
+}
+func (UnimplementedUserServiceServer) CreateUser(context.Context, *CreateUserReq) (*CreateUserRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -93,6 +109,24 @@ func _UserService_GetDetailUser_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).CreateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_CreateUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).CreateUser(ctx, req.(*CreateUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -103,6 +137,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetDetailUser",
 			Handler:    _UserService_GetDetailUser_Handler,
+		},
+		{
+			MethodName: "CreateUser",
+			Handler:    _UserService_CreateUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
