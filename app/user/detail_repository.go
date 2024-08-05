@@ -8,8 +8,8 @@ func (r *UserRepository) GetDetailUserById(ctx context.Context, firebaseId strin
 	if err := r.db.Select(`
 		users.*,
 		plans.id AS plan_id,
-		plans."planType" AS plan_type,
-		plans."maxMessages" AS max_messages,
+		plans.plan_type,
+		plans.max_messages,
 		plans.product_id AS product_id,
 		user_balance_messages.balance_message AS balance_message
 	`).

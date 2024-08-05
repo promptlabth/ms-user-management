@@ -34,14 +34,7 @@ func (r *UserRepository) UpsertUser(ctx context.Context, tx *gorm.DB, userEntity
 
 func (r *UserRepository) GetPlanByType(ctx context.Context, planType string) (*PlanEntity, error) {
 	var planEntity PlanEntity
-	if err := r.db.Raw(`SELECT
-	id,
-	'planType' as plan_type,
-	'maxMessages' as mex_messages,
-	product_id
-	FROM plans
-	WHERE plan_type = ?
-	`, freePlanType).Scan(&planEntity).Error; err != nil {
+	if err := r.db.Where("planType = ?", planType).First(&planEntity).Error; err != nil {
 		return nil, err
 	}
 	return &planEntity, nil
