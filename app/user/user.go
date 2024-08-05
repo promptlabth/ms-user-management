@@ -18,8 +18,8 @@ func (UserEntity) TableName() string {
 
 type PlanEntity struct {
 	ID          int64   `gorm:"column:id,primaryKey"`
-	PlanType    string  `gorm:"column:planType"`
-	MaxMessages int64   `gorm:"column:maxMessages"`
+	PlanType    string  `gorm:"column:plan_type"`
+	MaxMessages int64   `gorm:"column:max_messages"`
 	ProductId   *string `gorm:"column:product_id"`
 }
 
