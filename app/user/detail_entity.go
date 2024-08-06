@@ -2,7 +2,7 @@ package user
 
 type UserDetailInquirey struct {
 	ID          int64   `gorm:"column:id,primaryKey"`
-	FirebaseId  string  `gorm:"column:firebase_id,uniqueIndex"`
+	FirebaseId  string  `gorm:"column:firebase_id;uniqueIndex"`
 	Name        string  `gorm:"column:name"`
 	Email       *string `gorm:"column:email"`
 	ProfilePic  *string `gorm:"column:profilepic"`
