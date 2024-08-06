@@ -35,7 +35,7 @@ func TestCreateService(t *testing.T) {
 
 func (t *CreateServiceSuite) Test_GetPlanFailed_ReturnError() {
 	// Arrange
-	msg := CreateUserReqDomain{}
+	msg := UpsertUserReqDomain{}
 	t.userRepository.EXPECT().GetPlanByType(gomock.Any(), freePlanType).Return(nil, errors.New("error get plan failed"))
 
 	// Act
@@ -47,7 +47,7 @@ func (t *CreateServiceSuite) Test_GetPlanFailed_ReturnError() {
 }
 
 func (t *CreateServiceSuite) Test_CreateUserFailed_ReturnError() {
-	msg := CreateUserReqDomain{}
+	msg := UpsertUserReqDomain{}
 	t.userRepository.EXPECT().GetPlanByType(gomock.Any(), freePlanType).Return(&PlanEntity{}, nil)
 
 	t.userRepository.EXPECT().Transactional(gomock.Any()).DoAndReturn(
@@ -71,7 +71,7 @@ func (t *CreateServiceSuite) Test_CreateUserFailed_ReturnError() {
 
 func (t *CreateServiceSuite) Test_CreateUserBalanceIsFailed_ReturnError() {
 	// Arrange
-	msg := CreateUserReqDomain{
+	msg := UpsertUserReqDomain{
 		FirebaseId:  "firebase",
 		Name:        "Name",
 		Email:       TypeToPrt("prompt.lab@gmail.com"),
@@ -118,7 +118,7 @@ func (t *CreateServiceSuite) Test_CreateUserBalanceIsFailed_ReturnError() {
 
 func (t *CreateServiceSuite) Test_CreateUserSuccessflow() {
 	// Arrange
-	msg := CreateUserReqDomain{
+	msg := UpsertUserReqDomain{
 		FirebaseId:  "firebase",
 		Name:        "Name",
 		Email:       TypeToPrt("prompt.lab@gmail.com"),

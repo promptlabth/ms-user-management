@@ -25,8 +25,8 @@ func (r *UserRegis) GetDetailUser(ctx context.Context, req *GetUserByIdReq) (*Ge
 	return res, nil
 }
 
-func (r *UserRegis) CreateUser(ctx context.Context, req *CreateUserReq) (*CreateUserRes, error) {
-	msg := CreateUserReqDomain{
+func (r *UserRegis) UpsertUser(ctx context.Context, req *UpsertUserReq) (*UpsertUserRes, error) {
+	msg := UpsertUserReqDomain{
 		FirebaseId:  req.FirebaseId,
 		Name:        req.Name,
 		Email:       req.Email,
@@ -39,7 +39,7 @@ func (r *UserRegis) CreateUser(ctx context.Context, req *CreateUserReq) (*Create
 	if err != nil {
 		return nil, err
 	}
-	return &CreateUserRes{
+	return &UpsertUserRes{
 		Status:  "200",
 		Message: "success to save",
 	}, nil

@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func (s *UserSerivce) CreateUser(ctx context.Context, createUser CreateUserReqDomain) error {
+func (s *UserSerivce) CreateUser(ctx context.Context, createUser UpsertUserReqDomain) error {
 	planFree, err := s.userRepository.GetPlanByType(ctx, freePlanType)
 	if err != nil {
 		return err

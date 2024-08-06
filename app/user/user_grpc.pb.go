@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion8
 
 const (
 	UserService_GetDetailUser_FullMethodName = "/user.UserService/GetDetailUser"
-	UserService_CreateUser_FullMethodName    = "/user.UserService/CreateUser"
+	UserService_UpsertUser_FullMethodName    = "/user.UserService/UpsertUser"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -28,7 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
 	GetDetailUser(ctx context.Context, in *GetUserByIdReq, opts ...grpc.CallOption) (*GetUserByIdRes, error)
-	CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserRes, error)
+	UpsertUser(ctx context.Context, in *UpsertUserReq, opts ...grpc.CallOption) (*UpsertUserRes, error)
 }
 
 type userServiceClient struct {
@@ -49,10 +49,10 @@ func (c *userServiceClient) GetDetailUser(ctx context.Context, in *GetUserByIdRe
 	return out, nil
 }
 
-func (c *userServiceClient) CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserRes, error) {
+func (c *userServiceClient) UpsertUser(ctx context.Context, in *UpsertUserReq, opts ...grpc.CallOption) (*UpsertUserRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateUserRes)
-	err := c.cc.Invoke(ctx, UserService_CreateUser_FullMethodName, in, out, cOpts...)
+	out := new(UpsertUserRes)
+	err := c.cc.Invoke(ctx, UserService_UpsertUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (c *userServiceClient) CreateUser(ctx context.Context, in *CreateUserReq, o
 // for forward compatibility
 type UserServiceServer interface {
 	GetDetailUser(context.Context, *GetUserByIdReq) (*GetUserByIdRes, error)
-	CreateUser(context.Context, *CreateUserReq) (*CreateUserRes, error)
+	UpsertUser(context.Context, *UpsertUserReq) (*UpsertUserRes, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -75,8 +75,8 @@ type UnimplementedUserServiceServer struct {
 func (UnimplementedUserServiceServer) GetDetailUser(context.Context, *GetUserByIdReq) (*GetUserByIdRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDetailUser not implemented")
 }
-func (UnimplementedUserServiceServer) CreateUser(context.Context, *CreateUserReq) (*CreateUserRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
+func (UnimplementedUserServiceServer) UpsertUser(context.Context, *UpsertUserReq) (*UpsertUserRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpsertUser not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -109,20 +109,20 @@ func _UserService_GetDetailUser_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateUserReq)
+func _UserService_UpsertUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpsertUserReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).CreateUser(ctx, in)
+		return srv.(UserServiceServer).UpsertUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserService_CreateUser_FullMethodName,
+		FullMethod: UserService_UpsertUser_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).CreateUser(ctx, req.(*CreateUserReq))
+		return srv.(UserServiceServer).UpsertUser(ctx, req.(*UpsertUserReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -139,8 +139,8 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UserService_GetDetailUser_Handler,
 		},
 		{
-			MethodName: "CreateUser",
-			Handler:    _UserService_CreateUser_Handler,
+			MethodName: "UpsertUser",
+			Handler:    _UserService_UpsertUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

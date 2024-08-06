@@ -1,6 +1,6 @@
 package user
 
-type CreateUserReqDomain struct {
+type UpsertUserReqDomain struct {
 	FirebaseId  string
 	Name        string
 	Email       *string
