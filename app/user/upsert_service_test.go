@@ -39,7 +39,7 @@ func (t *CreateServiceSuite) Test_GetPlanFailed_ReturnError() {
 	t.userRepository.EXPECT().GetPlanByType(gomock.Any(), freePlanType).Return(nil, errors.New("error get plan failed"))
 
 	// Act
-	err := t.svc.CreateUser(context.Background(), msg)
+	_, err := t.svc.CreateUser(context.Background(), msg)
 
 	// Assert
 	t.Error(err)
@@ -62,7 +62,7 @@ func (t *CreateServiceSuite) Test_CreateUserFailed_ReturnError() {
 	)
 
 	// Act
-	err := t.svc.CreateUser(context.Background(), msg)
+	_, err := t.svc.CreateUser(context.Background(), msg)
 
 	// Assert
 	t.Error(err)
@@ -109,7 +109,7 @@ func (t *CreateServiceSuite) Test_CreateUserBalanceIsFailed_ReturnError() {
 	)
 
 	// Act
-	err := t.svc.CreateUser(context.Background(), msg)
+	_, err := t.svc.CreateUser(context.Background(), msg)
 
 	// Assert
 	t.Error(err)
@@ -162,9 +162,29 @@ func (t *CreateServiceSuite) Test_CreateUserSuccessflow() {
 		},
 	)
 
+	t.userRepository.EXPECT().GetPlanById(gomock.Any(), int64(1)).Return(&PlanEntity{
+		PlanType:    "Free",
+		MaxMessages: 60,
+	}, nil)
+
 	// Act
-	err := t.svc.CreateUser(context.Background(), msg)
+	res, err := t.svc.CreateUser(context.Background(), msg)
 
 	// Assert
 	t.NoError(err)
+	t.Equal(&UpsertUserResponseDomain{
+		UserDetail: UserDetailRespDomain{
+			FirebaseId:  "firebase",
+			Name:        "Name",
+			Email:       TypeToPrt("prompt.lab@gmail.com"),
+			ProfilePic:  TypeToPrt("www.img.url/profile"),
+			Platform:    TypeToPrt("facebook"),
+			AccessToken: TypeToPrt("accessToken"),
+			Balance:     0,
+		},
+		PlanDetail: PlanDetailRespDomain{
+			PlanType:   "Free",
+			MaxMessage: 60,
+		},
+	}, res)
 }

@@ -35,13 +35,27 @@ func (r *UserRegis) UpsertUser(ctx context.Context, req *UpsertUserReq) (*Upsert
 		AccessToken: req.AccessToken,
 		StripeId:    req.StripeId,
 	}
-	err := r.userService.CreateUser(ctx, msg)
+	res, err := r.userService.CreateUser(ctx, msg)
 	if err != nil {
 		return nil, err
 	}
 	return &UpsertUserRes{
 		Status:  "200",
 		Message: "success to save",
+		UserDetail: &UpsertUserDataRes{
+			FirebaseId:     res.UserDetail.FirebaseId,
+			Name:           res.UserDetail.Name,
+			Email:          res.UserDetail.Email,
+			ProfilePic:     res.UserDetail.ProfilePic,
+			Platform:       res.UserDetail.Platform,
+			AccessToken:    res.UserDetail.AccessToken,
+			StripeId:       res.UserDetail.StripeId,
+			BalanceMessage: res.UserDetail.Balance,
+		},
+		PlanDetail: &LoginPlanDetailRes{
+			PlanType:    res.PlanDetail.PlanType,
+			MaxMessages: res.PlanDetail.MaxMessage,
+		},
 	}, nil
 }
 

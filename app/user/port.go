@@ -17,4 +17,5 @@ type userRepository interface {
 	UpsertUser(ctx context.Context, tx *gorm.DB, userEntity *UserEntity) error
 	CreateUserBalance(ctx context.Context, tx *gorm.DB, userBalanceEntity *UserBalanceMessage) error
 	GetPlanByType(ctx context.Context, planType string) (*PlanEntity, error)
+	GetPlanById(ctx context.Context, planId int64) (*PlanEntity, error)
 }

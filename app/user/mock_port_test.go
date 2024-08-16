@@ -104,6 +104,21 @@ func (mr *MockuserRepositoryMockRecorder) GetDetailUserById(ctx, id any) *gomock
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDetailUserById", reflect.TypeOf((*MockuserRepository)(nil).GetDetailUserById), ctx, id)
 }
 
+// GetPlanById mocks base method.
+func (m *MockuserRepository) GetPlanById(ctx context.Context, planId int64) (*PlanEntity, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPlanById", ctx, planId)
+	ret0, _ := ret[0].(*PlanEntity)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPlanById indicates an expected call of GetPlanById.
+func (mr *MockuserRepositoryMockRecorder) GetPlanById(ctx, planId any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPlanById", reflect.TypeOf((*MockuserRepository)(nil).GetPlanById), ctx, planId)
+}
+
 // GetPlanByType mocks base method.
 func (m *MockuserRepository) GetPlanByType(ctx context.Context, planType string) (*PlanEntity, error) {
 	m.ctrl.T.Helper()

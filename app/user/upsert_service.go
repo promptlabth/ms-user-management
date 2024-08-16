@@ -6,14 +6,17 @@ import (
 	"gorm.io/gorm"
 )
 
-func (s *UserSerivce) CreateUser(ctx context.Context, createUser UpsertUserReqDomain) error {
+func (s *UserSerivce) CreateUser(ctx context.Context, createUser UpsertUserReqDomain) (*UpsertUserResponseDomain, error) {
+
 	planFree, err := s.userRepository.GetPlanByType(ctx, freePlanType)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
+	var user UserEntity
+	var userBalance UserBalanceMessage
 	err = s.userRepository.Transactional(func(tx *gorm.DB) error {
-		user := UserEntity{
+		user = UserEntity{
 			FirebaseId:  createUser.FirebaseId,
 			Name:        createUser.Name,
 			Email:       createUser.Email,
@@ -27,7 +30,7 @@ func (s *UserSerivce) CreateUser(ctx context.Context, createUser UpsertUserReqDo
 			return err
 		}
 
-		userBalance := UserBalanceMessage{
+		userBalance = UserBalanceMessage{
 			FirebaseId:     createUser.FirebaseId,
 			BalanceMessage: 0,
 		}
@@ -38,7 +41,28 @@ func (s *UserSerivce) CreateUser(ctx context.Context, createUser UpsertUserReqDo
 	})
 
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+
+	// get detail of user plan
+	plan, err := s.userRepository.GetPlanById(ctx, user.PlanId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &UpsertUserResponseDomain{
+		UserDetail: UserDetailRespDomain{
+			FirebaseId:  user.FirebaseId,
+			Name:        user.Name,
+			Email:       user.Email,
+			ProfilePic:  user.ProfilePic,
+			Platform:    user.Platform,
+			AccessToken: user.AccessToken,
+			Balance:     userBalance.BalanceMessage,
+		},
+		PlanDetail: PlanDetailRespDomain{
+			PlanType:   plan.PlanType,
+			MaxMessage: plan.MaxMessages,
+		},
+	}, nil
 }

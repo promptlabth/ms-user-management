@@ -23,8 +23,13 @@ func (r *UserRepository) UpsertUser(ctx context.Context, tx *gorm.DB, userEntity
 
 	if err := db.WithContext(ctx).Clauses(
 		clause.OnConflict{
-			Columns:   []clause.Column{{Name: "firebase_id"}},
-			UpdateAll: true,
+			Columns: []clause.Column{{Name: "firebase_id"}},
+			DoUpdates: clause.AssignmentColumns([]string{
+				"name",
+				"email",
+				"profilepic",
+				"access_token",
+			}),
 		},
 	).Create(userEntity).Error; err != nil {
 		return err
@@ -55,4 +60,12 @@ func (r *UserRepository) CreateUserBalance(ctx context.Context, tx *gorm.DB, use
 		return err
 	}
 	return nil
+}
+
+func (r *UserRepository) GetPlanById(ctx context.Context, planId int64) (*PlanEntity, error) {
+	var planEntity PlanEntity
+	if err := r.db.Where("id = ?", planId).First(&planEntity).Error; err != nil {
+		return nil, err
+	}
+	return &planEntity, nil
 }
