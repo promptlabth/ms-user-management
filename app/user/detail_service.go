@@ -4,15 +4,16 @@ import (
 	context "context"
 
 	"github.com/promptlabth/ms-user-management/logger"
+	userProto "github.com/promptlabth/proto-lib/user"
 )
 
-func (s *UserSerivce) GetUserById(ctx context.Context, firebase_id string) (*GetUserByIdRes, error) {
+func (s *UserSerivce) GetUserById(ctx context.Context, firebase_id string) (*userProto.GetUserByIdRes, error) {
 	res, err := s.userRepository.GetDetailUserById(ctx, firebase_id)
 	if err != nil {
 		return nil, err
 	}
 	logger.Info(ctx, res.PlanType)
-	return &GetUserByIdRes{
+	return &userProto.GetUserByIdRes{
 		Id:          res.ID,
 		FirebaseId:  res.FirebaseId,
 		Name:        res.Name,
@@ -21,7 +22,7 @@ func (s *UserSerivce) GetUserById(ctx context.Context, firebase_id string) (*Get
 		Platform:    res.Platform,
 		AccessToken: res.AccessToken,
 		StripeId:    res.StripeId,
-		Plan: &PlanDetail{
+		Plan: &userProto.PlanDetail{
 			Id:          res.PlanId,
 			PlanType:    res.PlanType,
 			MaxMessages: res.MaxMessages,

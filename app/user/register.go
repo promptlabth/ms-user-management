@@ -4,10 +4,12 @@ import (
 	context "context"
 
 	"github.com/promptlabth/ms-user-management/logger"
+	userProto "github.com/promptlabth/proto-lib/user"
 )
 
 type UserRegis struct {
 	userService *UserSerivce
+	userProto.UserServiceServer
 }
 
 func NewRegister(userService *UserSerivce) *UserRegis {
@@ -16,7 +18,7 @@ func NewRegister(userService *UserSerivce) *UserRegis {
 	}
 }
 
-func (r *UserRegis) GetDetailUser(ctx context.Context, req *GetUserByIdReq) (*GetUserByIdRes, error) {
+func (r *UserRegis) GetDetailUser(ctx context.Context, req *userProto.GetUserByIdReq) (*userProto.GetUserByIdRes, error) {
 	res, err := r.userService.GetUserById(ctx, req.FirebaseId)
 	if err != nil {
 		logger.Error(ctx, err.Error())
@@ -25,7 +27,7 @@ func (r *UserRegis) GetDetailUser(ctx context.Context, req *GetUserByIdReq) (*Ge
 	return res, nil
 }
 
-func (r *UserRegis) UpsertUser(ctx context.Context, req *UpsertUserReq) (*UpsertUserRes, error) {
+func (r *UserRegis) UpsertUser(ctx context.Context, req *userProto.UpsertUserReq) (*userProto.UpsertUserRes, error) {
 	msg := UpsertUserReqDomain{
 		FirebaseId:  req.FirebaseId,
 		Name:        req.Name,
@@ -39,10 +41,10 @@ func (r *UserRegis) UpsertUser(ctx context.Context, req *UpsertUserReq) (*Upsert
 	if err != nil {
 		return nil, err
 	}
-	return &UpsertUserRes{
+	return &userProto.UpsertUserRes{
 		Status:  "200",
 		Message: "success to save",
-		UserDetail: &UpsertUserDataRes{
+		UserDetail: &userProto.UpsertUserDataRes{
 			FirebaseId:     res.UserDetail.FirebaseId,
 			Name:           res.UserDetail.Name,
 			Email:          res.UserDetail.Email,
@@ -52,11 +54,9 @@ func (r *UserRegis) UpsertUser(ctx context.Context, req *UpsertUserReq) (*Upsert
 			StripeId:       res.UserDetail.StripeId,
 			BalanceMessage: res.UserDetail.Balance,
 		},
-		PlanDetail: &LoginPlanDetailRes{
+		PlanDetail: &userProto.LoginPlanDetailRes{
 			PlanType:    res.PlanDetail.PlanType,
 			MaxMessages: res.PlanDetail.MaxMessage,
 		},
 	}, nil
 }
-
-func (r *UserRegis) mustEmbedUnimplementedUserServiceServer() {}

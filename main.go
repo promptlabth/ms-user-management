@@ -13,6 +13,7 @@ import (
 	"github.com/promptlabth/ms-user-management/app/user"
 	"github.com/promptlabth/ms-user-management/config"
 	"github.com/promptlabth/ms-user-management/logger"
+	userProto "github.com/promptlabth/proto-lib/user"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"google.golang.org/grpc"
 	"gorm.io/driver/postgres"
@@ -59,7 +60,7 @@ func main() {
 	userService := user.NewService(userRepo)
 	userRegis := user.NewRegister(userService)
 
-	user.RegisterUserServiceServer(grpcServe, userRegis)
+	userProto.RegisterUserServiceServer(grpcServe, userRegis)
 
 	ctx, stop := signal.NotifyContext(ctx, os.Interrupt, syscall.SIGTERM)
 	defer stop()

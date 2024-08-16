@@ -1,6 +1,6 @@
 module github.com/promptlabth/ms-user-management
 
-go 1.22.5
+go 1.23.0
 
 require (
 	github.com/blendle/zapdriver v1.3.1
@@ -26,6 +26,7 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/promptlabth/proto-lib v0.0.0-20240816072334-cf4ef5efe30d // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
 	go.opentelemetry.io/otel/metric v1.28.0 // indirect
 	go.opentelemetry.io/otel/trace v1.28.0 // indirect
