@@ -78,7 +78,6 @@ func (t *CreateServiceSuite) Test_CreateUserBalanceIsFailed_ReturnError() {
 		ProfilePic:  TypeToPrt("www.img.url/profile"),
 		Platform:    TypeToPrt("facebook"),
 		AccessToken: TypeToPrt("accessToken"),
-		StripeId:    TypeToPrt("stripeId"),
 	}
 	t.userRepository.EXPECT().GetPlanByType(gomock.Any(), freePlanType).Return(&PlanEntity{
 		ID:       1,
@@ -97,7 +96,7 @@ func (t *CreateServiceSuite) Test_CreateUserBalanceIsFailed_ReturnError() {
 					ProfilePic:  TypeToPrt("www.img.url/profile"),
 					Platform:    TypeToPrt("facebook"),
 					AccessToken: TypeToPrt("accessToken"),
-					StripeId:    TypeToPrt("stripeId"),
+					StripeId:    nil,
 					PlanId:      1,
 				}),
 			).Return(nil)
@@ -125,7 +124,6 @@ func (t *CreateServiceSuite) Test_CreateUserSuccessflow() {
 		ProfilePic:  TypeToPrt("www.img.url/profile"),
 		Platform:    TypeToPrt("facebook"),
 		AccessToken: TypeToPrt("accessToken"),
-		StripeId:    TypeToPrt("stripeId"),
 	}
 	t.userRepository.EXPECT().GetPlanByType(gomock.Any(), freePlanType).Return(&PlanEntity{
 		ID:       1,
@@ -144,7 +142,7 @@ func (t *CreateServiceSuite) Test_CreateUserSuccessflow() {
 					ProfilePic:  TypeToPrt("www.img.url/profile"),
 					Platform:    TypeToPrt("facebook"),
 					AccessToken: TypeToPrt("accessToken"),
-					StripeId:    TypeToPrt("stripeId"),
+					StripeId:    nil,
 					PlanId:      1,
 				}),
 			).Return(nil)

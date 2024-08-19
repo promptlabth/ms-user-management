@@ -7,7 +7,6 @@ type UpsertUserReqDomain struct {
 	ProfilePic  *string
 	Platform    *string
 	AccessToken *string
-	StripeId    *string
 }
 
 type UpsertUserResponseDomain struct {

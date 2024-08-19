@@ -35,7 +35,6 @@ func (r *UserRegis) UpsertUser(ctx context.Context, req *userProto.UpsertUserReq
 		ProfilePic:  req.ProfilePic,
 		Platform:    req.Platform,
 		AccessToken: req.AccessToken,
-		StripeId:    req.StripeId,
 	}
 	res, err := r.userService.CreateUser(ctx, msg)
 	if err != nil {
@@ -51,7 +50,6 @@ func (r *UserRegis) UpsertUser(ctx context.Context, req *userProto.UpsertUserReq
 			ProfilePic:     res.UserDetail.ProfilePic,
 			Platform:       res.UserDetail.Platform,
 			AccessToken:    res.UserDetail.AccessToken,
-			StripeId:       res.UserDetail.StripeId,
 			BalanceMessage: res.UserDetail.Balance,
 		},
 		PlanDetail: &userProto.LoginPlanDetailRes{

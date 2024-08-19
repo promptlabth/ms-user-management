@@ -23,7 +23,7 @@ func (s *UserSerivce) CreateUser(ctx context.Context, createUser UpsertUserReqDo
 			ProfilePic:  createUser.ProfilePic,
 			Platform:    createUser.Platform,
 			AccessToken: createUser.AccessToken,
-			StripeId:    createUser.StripeId,
+			StripeId:    nil,
 			PlanId:      planFree.ID,
 		}
 		if err := s.userRepository.UpsertUser(ctx, tx, &user); err != nil {
