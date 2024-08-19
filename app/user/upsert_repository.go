@@ -85,3 +85,12 @@ func (r *UserRepository) GetPlanById(ctx context.Context, planId int64) (*PlanEn
 	}
 	return &planEntity, nil
 }
+
+func (r *UserRepository) GetUserByFirebaseId(ctx context.Context, firebaseId string) (*UserEntity, error) {
+	var user UserEntity
+
+	if err := r.db.WithContext(ctx).Where("firebase_id = ?", firebaseId).First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}

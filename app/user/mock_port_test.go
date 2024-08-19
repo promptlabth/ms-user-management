@@ -90,18 +90,18 @@ func (mr *MockuserRepositoryMockRecorder) CreateUserBalance(ctx, tx, userBalance
 }
 
 // GetBalanceMessage mocks base method.
-func (m *MockuserRepository) GetBalanceMessage(ctx context.Context, firebase string) (*UserBalanceMessage, error) {
+func (m *MockuserRepository) GetBalanceMessage(ctx context.Context, firebaseId string) (*UserBalanceMessage, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetBalanceMessage", ctx, firebase)
+	ret := m.ctrl.Call(m, "GetBalanceMessage", ctx, firebaseId)
 	ret0, _ := ret[0].(*UserBalanceMessage)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetBalanceMessage indicates an expected call of GetBalanceMessage.
-func (mr *MockuserRepositoryMockRecorder) GetBalanceMessage(ctx, firebase any) *gomock.Call {
+func (mr *MockuserRepositoryMockRecorder) GetBalanceMessage(ctx, firebaseId any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalanceMessage", reflect.TypeOf((*MockuserRepository)(nil).GetBalanceMessage), ctx, firebase)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalanceMessage", reflect.TypeOf((*MockuserRepository)(nil).GetBalanceMessage), ctx, firebaseId)
 }
 
 // GetDetailUserById mocks base method.
@@ -147,6 +147,21 @@ func (m *MockuserRepository) GetPlanByType(ctx context.Context, planType string)
 func (mr *MockuserRepositoryMockRecorder) GetPlanByType(ctx, planType any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPlanByType", reflect.TypeOf((*MockuserRepository)(nil).GetPlanByType), ctx, planType)
+}
+
+// GetUserByFirebaseId mocks base method.
+func (m *MockuserRepository) GetUserByFirebaseId(ctx context.Context, firebaseId string) (*UserEntity, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserByFirebaseId", ctx, firebaseId)
+	ret0, _ := ret[0].(*UserEntity)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserByFirebaseId indicates an expected call of GetUserByFirebaseId.
+func (mr *MockuserRepositoryMockRecorder) GetUserByFirebaseId(ctx, firebaseId any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByFirebaseId", reflect.TypeOf((*MockuserRepository)(nil).GetUserByFirebaseId), ctx, firebaseId)
 }
 
 // Transactional mocks base method.
