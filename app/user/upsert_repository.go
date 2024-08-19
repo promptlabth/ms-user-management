@@ -55,7 +55,14 @@ func (r *UserRepository) CreateUserBalance(ctx context.Context, tx *gorm.DB, use
 		db = tx
 	}
 
-	if err := db.WithContext(ctx).Create(userBalanceEntity).Error; err != nil && err != gorm.ErrDuplicatedKey {
+	if err := db.WithContext(ctx).Clauses(
+		clause.OnConflict{
+			Columns: []clause.Column{{
+				Name: "firebase_id",
+			}},
+			DoNothing: true,
+		},
+	).Create(userBalanceEntity).Error; err != nil {
 		// if have error and error is not duplicate key
 		return err
 	}
