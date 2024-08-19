@@ -31,18 +31,7 @@ func (r *UserRepository) UpsertUser(ctx context.Context, tx *gorm.DB, userEntity
 				"access_token",
 			}),
 		},
-		clause.Returning{
-			Columns: []clause.Column{
-				{Name: "firebase_id"},
-				{Name: "name"},
-				{Name: "email"},
-				{Name: "profilepic"},
-				{Name: "platform"},
-				{Name: "access_token"},
-				{Name: "stripe_id"},
-				{Name: "plan_id"},
-			},
-		},
+		clause.Returning{},
 	).Create(userEntity).Error; err != nil {
 		return err
 	}
@@ -74,6 +63,7 @@ func (r *UserRepository) CreateUserBalance(ctx context.Context, tx *gorm.DB, use
 			}},
 			DoNothing: true,
 		},
+		clause.Returning{},
 	).Create(userBalanceEntity).Error; err != nil {
 		// if have error and error is not duplicate key
 		return err
