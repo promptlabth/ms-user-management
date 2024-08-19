@@ -31,6 +31,18 @@ func (r *UserRepository) UpsertUser(ctx context.Context, tx *gorm.DB, userEntity
 				"access_token",
 			}),
 		},
+		clause.Returning{
+			Columns: []clause.Column{
+				{Name: "firebase_id"},
+				{Name: "name"},
+				{Name: "email"},
+				{Name: "profilepic"},
+				{Name: "platform"},
+				{Name: "access_token"},
+				{Name: "stripe_id"},
+				{Name: "plan_id"},
+			},
+		},
 	).Create(userEntity).Error; err != nil {
 		return err
 	}

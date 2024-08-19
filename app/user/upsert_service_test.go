@@ -160,16 +160,16 @@ func (t *CreateServiceSuite) Test_CreateUserSuccessflow() {
 		},
 	)
 
-	t.userRepository.EXPECT().GetUserByFirebaseId(gomock.Any(), "firebase").Return(&UserEntity{
-		ID:          1,
-		FirebaseId:  "firebase",
-		PlanId:      1,
-		Name:        "Name",
-		Email:       TypeToPrt("prompt.lab@gmail.com"),
-		ProfilePic:  TypeToPrt("www.img.url/profile"),
-		Platform:    TypeToPrt("facebook"),
-		AccessToken: TypeToPrt("accessToken"),
-	}, nil)
+	// t.userRepository.EXPECT().GetUserByFirebaseId(gomock.Any(), "firebase").Return(&UserEntity{
+	// 	ID:          1,
+	// 	FirebaseId:  "firebase",
+	// 	PlanId:      1,
+	// 	Name:        "Name",
+	// 	Email:       TypeToPrt("prompt.lab@gmail.com"),
+	// 	ProfilePic:  TypeToPrt("www.img.url/profile"),
+	// 	Platform:    TypeToPrt("facebook"),
+	// 	AccessToken: TypeToPrt("accessToken"),
+	// }, nil)
 
 	t.userRepository.EXPECT().GetPlanById(gomock.Any(), int64(1)).Return(&PlanEntity{
 		PlanType:    "Free",
