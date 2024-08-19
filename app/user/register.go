@@ -51,6 +51,7 @@ func (r *UserRegis) UpsertUser(ctx context.Context, req *userProto.UpsertUserReq
 			Platform:       res.UserDetail.Platform,
 			AccessToken:    res.UserDetail.AccessToken,
 			BalanceMessage: res.UserDetail.Balance,
+			StripeId:       res.UserDetail.StripeId,
 		},
 		PlanDetail: &userProto.LoginPlanDetailRes{
 			PlanType:    res.PlanDetail.PlanType,
