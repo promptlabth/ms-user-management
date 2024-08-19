@@ -89,6 +89,21 @@ func (mr *MockuserRepositoryMockRecorder) CreateUserBalance(ctx, tx, userBalance
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUserBalance", reflect.TypeOf((*MockuserRepository)(nil).CreateUserBalance), ctx, tx, userBalanceEntity)
 }
 
+// GetBalanceMessage mocks base method.
+func (m *MockuserRepository) GetBalanceMessage(ctx context.Context, firebase string) (*UserBalanceMessage, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetBalanceMessage", ctx, firebase)
+	ret0, _ := ret[0].(*UserBalanceMessage)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetBalanceMessage indicates an expected call of GetBalanceMessage.
+func (mr *MockuserRepositoryMockRecorder) GetBalanceMessage(ctx, firebase any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalanceMessage", reflect.TypeOf((*MockuserRepository)(nil).GetBalanceMessage), ctx, firebase)
+}
+
 // GetDetailUserById mocks base method.
 func (m *MockuserRepository) GetDetailUserById(ctx context.Context, id string) (*UserDetailInquirey, error) {
 	m.ctrl.T.Helper()

@@ -69,6 +69,15 @@ func (r *UserRepository) CreateUserBalance(ctx context.Context, tx *gorm.DB, use
 	return nil
 }
 
+func (r *UserRepository) GetBalanceMessage(ctx context.Context, firebase string) (*UserBalanceMessage, error) {
+	var userBalance UserBalanceMessage
+
+	if err := r.db.WithContext(ctx).Where("firebase_id = ?", firebase).First(&userBalance).Error; err != nil {
+		return nil, err
+	}
+	return &userBalance, nil
+}
+
 func (r *UserRepository) GetPlanById(ctx context.Context, planId int64) (*PlanEntity, error) {
 	var planEntity PlanEntity
 	if err := r.db.Where("id = ?", planId).First(&planEntity).Error; err != nil {

@@ -18,4 +18,5 @@ type userRepository interface {
 	CreateUserBalance(ctx context.Context, tx *gorm.DB, userBalanceEntity *UserBalanceMessage) error
 	GetPlanByType(ctx context.Context, planType string) (*PlanEntity, error)
 	GetPlanById(ctx context.Context, planId int64) (*PlanEntity, error)
+	GetBalanceMessage(ctx context.Context, firebase string) (*UserBalanceMessage, error)
 }

@@ -165,6 +165,12 @@ func (t *CreateServiceSuite) Test_CreateUserSuccessflow() {
 		MaxMessages: 60,
 	}, nil)
 
+	t.userRepository.EXPECT().GetBalanceMessage(gomock.Any(), "firebase").Return(
+		&UserBalanceMessage{
+			FirebaseId:     "firebase",
+			BalanceMessage: 0,
+		}, nil,
+	)
 	// Act
 	res, err := t.svc.CreateUser(context.Background(), msg)
 
