@@ -21,7 +21,7 @@ func (r *UserRepository) UpsertUser(ctx context.Context, tx *gorm.DB, userEntity
 		db = tx
 	}
 
-	if err := db.Debug().WithContext(ctx).Clauses(
+	if err := db.WithContext(ctx).Clauses(
 		clause.OnConflict{
 			Columns: []clause.Column{{Name: "firebase_id"}},
 			DoUpdates: clause.AssignmentColumns([]string{

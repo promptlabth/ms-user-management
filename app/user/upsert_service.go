@@ -43,12 +43,6 @@ func (s *UserSerivce) CreateUser(ctx context.Context, createUser UpsertUserReqDo
 		return nil, err
 	}
 
-	// // get user detail from firebase id
-	// user, err := s.userRepository.GetUserByFirebaseId(ctx, createUser.FirebaseId)
-	// if err != nil {
-	// 	return nil, err
-	// }
-
 	// get detail of user plan
 	plan, err := s.userRepository.GetPlanById(ctx, user.PlanId)
 	if err != nil {
@@ -69,6 +63,7 @@ func (s *UserSerivce) CreateUser(ctx context.Context, createUser UpsertUserReqDo
 			ProfilePic:  user.ProfilePic,
 			Platform:    user.Platform,
 			AccessToken: user.AccessToken,
+			StripeId:    user.StripeId,
 			Balance:     userBalance.BalanceMessage,
 		},
 		PlanDetail: PlanDetailRespDomain{
