@@ -14,7 +14,7 @@ func (s *UserSerivce) CreateUser(ctx context.Context, createUser UpsertUserReqDo
 	}
 
 	var user UserEntity
-	var userBalance UserBalanceMessage
+
 	err = s.userRepository.Transactional(func(tx *gorm.DB) error {
 		user = UserEntity{
 			FirebaseId:  createUser.FirebaseId,
@@ -30,7 +30,7 @@ func (s *UserSerivce) CreateUser(ctx context.Context, createUser UpsertUserReqDo
 			return err
 		}
 
-		userBalance = UserBalanceMessage{
+		userBalance := UserBalanceMessage{
 			FirebaseId:     createUser.FirebaseId,
 			BalanceMessage: 0,
 		}
@@ -50,11 +50,11 @@ func (s *UserSerivce) CreateUser(ctx context.Context, createUser UpsertUserReqDo
 		return nil, err
 	}
 
-	// // get balance of user
-	// userBalance, err := s.userRepository.GetBalanceMessage(ctx, user.FirebaseId)
-	// if err != nil {
-	// 	return nil, err
-	// }
+	// get balance of user
+	userBalance, err := s.userRepository.GetBalanceMessage(ctx, user.FirebaseId)
+	if err != nil {
+		return nil, err
+	}
 
 	return &UpsertUserResponseDomain{
 		UserDetail: UserDetailRespDomain{
