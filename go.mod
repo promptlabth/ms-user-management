@@ -4,7 +4,7 @@ go 1.23.0
 
 require (
 	github.com/blendle/zapdriver v1.3.1
-	github.com/promptlabth/proto-lib v0.0.0-20240819082138-c3acc40c7a0c
+	github.com/promptlabth/proto-lib v0.0.0-20240819082519-94ea4bd4f50d
 	github.com/stretchr/testify v1.9.0
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.53.0
 	go.opentelemetry.io/otel v1.28.0
